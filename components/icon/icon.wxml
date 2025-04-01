@@ -1,0 +1,5 @@
+<image 
+  src="{{icons[type]}}" 
+  style="width: {{size}}rpx; height: {{size}}rpx;"
+  bindtap="onClick"
+></image>
