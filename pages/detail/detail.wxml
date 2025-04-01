@@ -1,0 +1,159 @@
+<!--pages/detail/detail.wxml-->
+<view class="container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+  
+  <!-- 会面详情内容 -->
+  <view wx:else class="meeting-detail">
+    <!-- 会面标题和状态 -->
+    <view class="meeting-header">
+      <text class="meeting-title">{{meeting.title}}</text>
+      
+      <view class="meeting-status {{meeting.status}}">
+        <text wx:if="{{meeting.status === 'pending'}}">待确认</text>
+        <text wx:elif="{{meeting.status === 'confirmed'}}">已确认</text>
+        <text wx:elif="{{meeting.status === 'completed'}}">已完成</text>
+        <text wx:elif="{{meeting.status === 'cancelled'}}">已取消</text>
+        <text wx:else>未知状态</text>
+      </view>
+    </view>
+    
+    <!-- 会面基本信息 -->
+    <view class="info-section">
+      <view class="info-item">
+        <icon class="icon" type="time" size="36"></icon>
+        <text class="info-text">{{meeting.formattedDate}} {{meeting.time}}</text>
+      </view>
+      
+      <view class="info-item">
+        <icon class="icon" type="location" size="36"></icon>
+        <text class="info-text">{{meeting.venueName || '未确定地点'}}</text>
+      </view>
+      
+      <view class="info-item" wx:if="{{meeting.venueAddress}}">
+        <view class="icon-placeholder"></view>
+        <text class="info-address">{{meeting.venueAddress}}</text>
+      </view>
+      
+      <view class="info-item">
+        <icon class="icon" type="people" size="36"></icon>
+        <text class="info-text">{{meeting.participants.length}}人参与</text>
+      </view>
+    </view>
+    
+    <!-- 会面描述 -->
+    <view class="description-section" wx:if="{{meeting.description}}">
+      <text class="section-title">会面描述</text>
+      <text class="description-text">{{meeting.description}}</text>
+    </view>
+    
+    <!-- 参与者列表 -->
+    <view class="participants-section">
+      <text class="section-title">参与者</text>
+      
+      <view class="participant-list">
+        <view 
+          class="participant-item" 
+          wx:for="{{meeting.participants}}" 
+          wx:key="id"
+        >
+          <image class="participant-avatar" src="{{item.avatarUrl}}"></image>
+          <text class="participant-name">{{item.nickName}}{{item.id === meeting.creator.id ? ' (创建者)' : ''}}</text>
+          <view class="location-status {{item.location ? 'located' : 'unlocated'}}">
+            <text>{{item.location ? '已定位' : '未定位'}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 地图显示区域 -->
+    <view class="map-section">
+      <text class="section-title">位置信息</text>
+      
+      <map
+        id="meeting-map"
+        class="meeting-map"
+        latitude="{{meeting.venueLocation.latitude || 39.908722}}"
+        longitude="{{meeting.venueLocation.longitude || 116.397499}}"
+        markers="{{markers}}"
+        show-location="{{true}}"
+        scale="14"
+      ></map>
+    </view>
+    
+    <!-- 地点推荐区域 -->
+    <view class="venue-section" wx:if="{{!meeting.isPast && !meeting.venueName && meeting.isCreator}}">
+      <text class="section-title">地点推荐</text>
+      
+      <view class="venue-actions">
+        <button class="btn-venue" bindtap="toggleVenueList" disabled="{{loadingVenues}}">
+          {{loadingVenues ? '加载推荐中...' : (venueRecommendations.length ? '查看推荐地点' : '暂无推荐地点')}}
+        </button>
+        
+        <button 
+          class="btn-confirm" 
+          bindtap="confirmVenue" 
+          disabled="{{!selectedVenue}}"
+        >确认选择</button>
+      </view>
+      
+      <!-- 推荐地点列表弹窗 -->
+      <view class="venue-list {{showVenueList ? 'show' : ''}}" wx:if="{{venueRecommendations.length > 0}}">
+        <view class="venue-list-header">
+          <text class="venue-list-title">推荐地点</text>
+          <icon class="icon close-icon" type="close" size="36" bindtap="toggleVenueList"></icon>
+        </view>
+        
+        <scroll-view class="venue-scroll-view" scroll-y="{{true}}">
+          <view 
+            class="venue-item {{selectedVenue && selectedVenue.id === venue.id ? 'selected' : ''}}" 
+            wx:for="{{venueRecommendations}}" 
+            wx:for-item="venue" 
+            wx:key="id"
+            bindtap="selectVenue"
+            data-id="{{venue.id}}"
+          >
+            <view class="venue-info">
+              <text class="venue-name">{{venue.name}}</text>
+              <text class="venue-address">{{venue.address}}</text>
+              <view class="venue-tags">
+                <text class="venue-tag" wx:for="{{venue.tags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+              </view>
+            </view>
+            
+            <view class="venue-rating">
+              <text class="rating-value">{{venue.rating}}</text>
+              <text class="rating-label">评分</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+    
+    <!-- 操作按钮 -->
+    <view class="action-section">
+      <!-- 非参与者可加入 -->
+      <button 
+        class="btn-action btn-join" 
+        wx:if="{{!meeting.isParticipant && !meeting.isPast && meeting.status !== 'cancelled'}}"
+        bindtap="joinMeeting"
+      >加入会面</button>
+      
+      <!-- 分享按钮 -->
+      <button 
+        class="btn-action btn-share" 
+        open-type="share"
+      >分享</button>
+      
+      <!-- 创建者可取消会面 -->
+      <button 
+        class="btn-action btn-cancel" 
+        wx:if="{{meeting.isCreator && !meeting.isPast && meeting.status !== 'cancelled'}}"
+        bindtap="cancelMeeting"
+      >取消会面</button>
+    </view>
+  </view>
+</view>
