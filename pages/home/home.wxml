@@ -1,0 +1,106 @@
+<!--pages/home/home.wxml-->
+<view class="container">
+  <!-- 页面顶部 -->
+  <view class="header">
+    <view class="user-info" wx:if="{{hasUserInfo}}">
+      <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+      <text class="welcome">你好，{{userInfo.nickName}}</text>
+    </view>
+    <button wx:else class="login-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录</button>
+    
+    <view class="filter-tabs">
+      <view class="tab {{filterStatus === 'upcoming' ? 'active' : ''}}" bindtap="switchFilter" data-status="upcoming">
+        即将到来
+      </view>
+      <view class="tab {{filterStatus === 'past' ? 'active' : ''}}" bindtap="switchFilter" data-status="past">
+        已结束
+      </view>
+      <view class="tab {{filterStatus === 'all' ? 'active' : ''}}" bindtap="switchFilter" data-status="all">
+        全部
+      </view>
+    </view>
+  </view>
+  
+  <!-- 会面列表 -->
+  <scroll-view 
+    scroll-y="{{true}}" 
+    class="meeting-list"
+    refresher-enabled="{{true}}"
+    refresher-triggered="{{refreshing}}"
+    bindrefresherrefresh="onRefresh"
+  >
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading">
+      <text>加载中...</text>
+    </view>
+    
+    <!-- 空状态 -->
+    <view wx:elif="{{meetings.length === 0}}" class="empty-state">
+      <image class="empty-icon" src="/images/empty_state.png"></image>
+      <text class="empty-text">暂无会面</text>
+      <button class="btn-create" bindtap="navigateToCreate">创建会面</button>
+    </view>
+    
+    <!-- 会面列表内容 -->
+    <view wx:else class="meeting-cards">
+      <view 
+        wx:for="{{meetings}}" 
+        wx:key="id" 
+        class="meeting-card {{item.isPast ? 'past' : ''}}"
+        bindtap="navigateToDetail"
+        data-id="{{item.id}}"
+      >
+        <view class="meeting-header">
+          <text class="meeting-title">{{item.title}}</text>
+          <text class="meeting-status {{item.isPast ? 'past-status' : 'upcoming-status'}}">
+            {{item.isPast ? '已结束' : '即将开始'}}
+          </text>
+        </view>
+        
+        <view class="meeting-info">
+          <view class="info-item">
+            <icon class="icon" type="time" size="32"></icon>
+            <text>{{item.formattedDate}} {{item.time}}</text>
+          </view>
+          
+          <view class="info-item">
+            <icon class="icon" type="location" size="32"></icon>
+            <text>{{item.venueName || '未确定地点'}}</text>
+          </view>
+          
+          <view class="info-item">
+            <icon class="icon" type="people" size="32"></icon>
+            <text>{{item.participants.length}}人参与</text>
+          </view>
+        </view>
+        
+        <view class="meeting-footer">
+          <view class="participants">
+            <image 
+              wx:for="{{item.participants}}" 
+              wx:for-item="participant" 
+              wx:key="id"
+              wx:if="{{index < 5}}"
+              class="participant-avatar" 
+              src="{{participant.avatarUrl}}"
+            ></image>
+            <text wx:if="{{item.participants.length > 5}}" class="more-participants">
+              +{{item.participants.length - 5}}
+            </text>
+          </view>
+          
+          <view class="actions">
+            <button class="btn-detail">查看详情</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  
+  <!-- 底部创建按钮 -->
+  <view class="create-button-container">
+    <button class="btn-create-float" bindtap="navigateToCreate">
+      <icon class="icon" type="add" size="40"></icon>
+    </button>
+  </view>
+</view>
