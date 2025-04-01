@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "我的"
+}
