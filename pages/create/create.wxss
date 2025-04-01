@@ -1,0 +1,319 @@
+/* pages/create/create.wxss */
+.container {
+  padding: 30rpx;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 步骤指示器样式 */
+.steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 40rpx 40rpx;
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.step-number {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background-color: #e8e8e8;
+  color: #999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: 500;
+  margin-bottom: 10rpx;
+}
+
+.step-item.active .step-number {
+  background-color: #1890ff;
+  color: #ffffff;
+}
+
+.step-text {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.step-item.active .step-text {
+  color: #1890ff;
+}
+
+.step-line {
+  flex: 1;
+  height: 4rpx;
+  background-color: #e8e8e8;
+  margin: 0 20rpx;
+}
+
+.step-line.active {
+  background-color: #1890ff;
+}
+
+/* 步骤内容区域 */
+.step-content {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 表单样式 */
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333333;
+  margin-bottom: 15rpx;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  background-color: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.form-textarea {
+  width: 100%;
+  height: 200rpx;
+  background-color: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.date-time-picker {
+  display: flex;
+  justify-content: space-between;
+}
+
+.picker-item {
+  flex: 1;
+  height: 80rpx;
+  background-color: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.picker-item:last-child {
+  margin-right: 0;
+}
+
+/* 好友选择样式 */
+.friends-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 30rpx;
+}
+
+.current-user {
+  margin-bottom: 20rpx;
+}
+
+.friend-list {
+  max-height: 600rpx;
+  overflow-y: auto;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eeeeee;
+}
+
+.friend-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.friend-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.check-circle {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid #dddddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-circle.checked {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #ffffff;
+}
+
+.friend-item.selected {
+  background-color: #f0f9ff;
+}
+
+.location-tag {
+  display: flex;
+  align-items: center;
+  background-color: #e6f7ff;
+  color: #1890ff;
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.location-tag text {
+  margin-left: 6rpx;
+}
+
+.divider {
+  height: 1rpx;
+  background-color: #eeeeee;
+  margin: 20rpx 0;
+}
+
+.empty-friends {
+  padding: 40rpx 0;
+  text-align: center;
+  color: #999999;
+  font-size: 28rpx;
+}
+
+/* 确认页样式 */
+.summary-card {
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.summary-header {
+  background-color: #1890ff;
+  color: #ffffff;
+  padding: 20rpx 30rpx;
+}
+
+.summary-title {
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.summary-body {
+  padding: 30rpx;
+}
+
+.summary-item {
+  margin-bottom: 20rpx;
+  display: flex;
+}
+
+.summary-label {
+  font-size: 28rpx;
+  color: #666666;
+  min-width: 120rpx;
+}
+
+.summary-value {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+  flex: 1;
+}
+
+.participant-list {
+  margin-top: 30rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #eeeeee;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.participant-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+}
+
+.participant-name {
+  font-size: 26rpx;
+  color: #333333;
+}
+
+.summary-tips {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  background-color: #fff8e6;
+  border-radius: 8rpx;
+  color: #ff9500;
+  font-size: 24rpx;
+  text-align: center;
+}
+
+/* 底部按钮 */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40rpx;
+  padding: 20rpx 0;
+}
+
+.btn {
+  flex: 1;
+  margin: 0 15rpx;
+  padding: 20rpx 0;
+  font-size: 30rpx;
+  border-radius: 8rpx;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #1890ff;
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background-color: #f5f5f5;
+  color: #666666;
+}
+
+.btn.loading {
+  opacity: 0.7;
+}
