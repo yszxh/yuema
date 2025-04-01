@@ -1,0 +1,136 @@
+<!--pages/discover/discover.wxml-->
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-bar">
+    <icon class="icon" type="search" size="36"></icon>
+    <input class="search-input" placeholder="搜索活动、地点" disabled="true" bindtap="navigateToSearch"/>
+  </view>
+  
+  <!-- 分类菜单 -->
+  <scroll-view class="category-menu" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+    <view 
+      class="category-item {{selectedCategory === category.id ? 'active' : ''}}" 
+      wx:for="{{categories}}" 
+      wx:for-item="category" 
+      wx:key="id"
+      data-category="{{category.id}}"
+      bindtap="changeCategory"
+    >
+      {{category.name}}
+    </view>
+  </scroll-view>
+  
+  <!-- 页面内容 -->
+  <scroll-view 
+    class="content" 
+    scroll-y="{{true}}"
+    refresher-enabled="{{true}}"
+    refresher-triggered="{{refreshing}}"
+    bindrefresherrefresh="onPullDownRefresh"
+    bindscrolltolower="onReachBottom"
+  >
+    <!-- 加载中状态 -->
+    <view wx:if="{{loading}}" class="loading-container">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+    
+    <!-- 主要内容区域 -->
+    <block wx:else>
+      <!-- 热门场所版块 -->
+      <view class="section-header">
+        <text class="section-title">热门场所</text>
+        <text class="section-more">查看全部</text>
+      </view>
+      
+      <scroll-view class="venues-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+        <view 
+          class="venue-card" 
+          wx:for="{{popularVenues}}" 
+          wx:key="id"
+        >
+          <image class="venue-image" src="{{item.imageUrl || '/images/default_venue.png'}}"></image>
+          <view class="venue-info">
+            <text class="venue-name">{{item.name}}</text>
+            <view class="venue-meta">
+              <text class="venue-rating">{{item.rating}} 分</text>
+              <text class="venue-distance" wx:if="{{item.distanceText}}">{{item.distanceText}}</text>
+            </view>
+          </view>
+        </view>
+        
+        <view class="venue-card empty" wx:if="{{popularVenues.length === 0}}">
+          <text>暂无热门场所</text>
+        </view>
+      </scroll-view>
+      
+      <!-- 附近活动版块 -->
+      <view class="section-header">
+        <text class="section-title">附近活动</text>
+        <view class="section-action" bindtap="navigateToCreate">
+          <text>创建活动</text>
+          <icon class="icon" type="add" size="30"></icon>
+        </view>
+      </view>
+      
+      <view class="meeting-list">
+        <view 
+          class="meeting-card" 
+          wx:for="{{publicMeetings}}" 
+          wx:key="id"
+          bindtap="navigateToDetail"
+          data-id="{{item.id}}"
+        >
+          <view class="meeting-info">
+            <text class="meeting-title">{{item.title}}</text>
+            <view class="meeting-meta">
+              <view class="meta-item">
+                <icon class="icon" type="time" size="28"></icon>
+                <text>{{item.formattedDate}} {{item.time}}</text>
+              </view>
+              
+              <view class="meta-item">
+                <icon class="icon" type="location" size="28"></icon>
+                <text>{{item.venueName}}</text>
+              </view>
+              
+              <view class="meta-item" wx:if="{{item.distanceText}}">
+                <text class="distance-tag">{{item.distanceText}}</text>
+              </view>
+            </view>
+          </view>
+          
+          <view class="meeting-participants">
+            <image 
+              class="participant-avatar" 
+              wx:for="{{item.participants}}" 
+              wx:for-item="participant" 
+              wx:key="id"
+              wx:if="{{index < 3}}"
+              src="{{participant.avatarUrl}}"
+            ></image>
+            <text class="participant-count" wx:if="{{item.participants.length > 3}}">+{{item.participants.length - 3}}</text>
+          </view>
+        </view>
+        
+        <!-- 空状态 -->
+        <view class="empty-meetings" wx:if="{{publicMeetings.length === 0}}">
+          <image src="/images/empty_meetings.png" class="empty-icon"></image>
+          <text class="empty-text">暂无附近活动</text>
+          <button class="btn-create-meeting" bindtap="navigateToCreate">创建活动</button>
+        </view>
+        
+        <!-- 加载更多 -->
+        <view class="load-more" wx:if="{{loadingMore && publicMeetings.length > 0}}">
+          <view class="loading-spinner small"></view>
+          <text>加载更多...</text>
+        </view>
+        
+        <!-- 没有更多数据 -->
+        <view class="no-more" wx:if="{{!hasMoreMeetings && publicMeetings.length > 0}}">
+          <text>— 已经到底啦 —</text>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+</view>
