@@ -1,0 +1,5 @@
+/* 图标默认样式 */
+image {
+  display: inline-block;
+  vertical-align: middle;
+}
