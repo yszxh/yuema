@@ -1,0 +1,180 @@
+/**app.wxss**/
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #f7f7f7;
+  color: #333333;
+}
+
+.container {
+  background: #ffffff;
+  min-height: 100vh;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+/* 通用样式 */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* 颜色 */
+.text-primary {
+  color: #1890ff;
+}
+
+.text-secondary {
+  color: #ff9500;
+}
+
+.text-success {
+  color: #52c41a;
+}
+
+.bg-primary {
+  background-color: #1890ff;
+}
+
+.bg-secondary {
+  background-color: #ff9500;
+}
+
+.bg-success {
+  background-color: #52c41a;
+}
+
+/* 文本颜色 */
+.text-dark {
+  color: #333333;
+}
+
+.text-medium {
+  color: #666666;
+}
+
+.text-light {
+  color: #999999;
+}
+
+/* 边距 */
+.margin-xs {
+  margin: 5px;
+}
+
+.margin-sm {
+  margin: 10px;
+}
+
+.margin-md {
+  margin: 15px;
+}
+
+.margin-lg {
+  margin: 20px;
+}
+
+.padding-xs {
+  padding: 5px;
+}
+
+.padding-sm {
+  padding: 10px;
+}
+
+.padding-md {
+  padding: 15px;
+}
+
+.padding-lg {
+  padding: 20px;
+}
+
+/* 卡片样式 */
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow: hidden;
+  border: 1px solid #eeeeee;
+  margin-bottom: 15px;
+}
+
+/* 按钮样式 */
+.btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: #1890ff;
+  color: #ffffff;
+}
+
+.btn-outline {
+  border: 1px solid #1890ff;
+  color: #1890ff;
+  background: transparent;
+}
+
+/* 标签样式 */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.tag-primary {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.tag-success {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.tag-warning {
+  background: #fff8e6;
+  color: #ff9500;
+}
+
+/* 分割线 */
+.divider {
+  height: 1px;
+  background: #eeeeee;
+  margin: 10px 0;
+}
+
+/* 隐藏滚动条但保持功能 */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
