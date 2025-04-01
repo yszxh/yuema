@@ -1,0 +1,314 @@
+/* pages/discover/discover.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f7f7f7;
+}
+
+/* 搜索框样式 */
+.search-bar {
+  padding: 20rpx 30rpx;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.search-input {
+  flex: 1;
+  height: 70rpx;
+  background-color: #f5f5f5;
+  border-radius: 35rpx;
+  margin-left: 15rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* 分类菜单样式 */
+.category-menu {
+  display: flex;
+  white-space: nowrap;
+  background-color: #ffffff;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.category-item {
+  display: inline-block;
+  padding: 12rpx 30rpx;
+  margin: 0 10rpx;
+  font-size: 28rpx;
+  color: #666666;
+  border-radius: 30rpx;
+  transition: all 0.3s;
+}
+
+.category-item:first-child {
+  margin-left: 30rpx;
+}
+
+.category-item:last-child {
+  margin-right: 30rpx;
+}
+
+.category-item.active {
+  background-color: #1890ff;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* 内容区域样式 */
+.content {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 加载状态样式 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60rpx 0;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #1890ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+.loading-spinner.small {
+  width: 36rpx;
+  height: 36rpx;
+  border-width: 3rpx;
+  margin-bottom: 0;
+  margin-right: 15rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  color: #999999;
+  font-size: 28rpx;
+}
+
+/* 板块标题样式 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background-color: #ffffff;
+  margin-top: 20rpx;
+}
+
+.section-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.section-more {
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.section-action {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #1890ff;
+}
+
+.section-action text {
+  margin-right: 10rpx;
+}
+
+/* 场所列表样式 */
+.venues-scroll {
+  white-space: nowrap;
+  padding: 0 20rpx 30rpx;
+  background-color: #ffffff;
+}
+
+.venue-card {
+  display: inline-block;
+  width: 280rpx;
+  margin-right: 20rpx;
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.venue-card:last-child {
+  margin-right: 30rpx;
+}
+
+.venue-image {
+  width: 280rpx;
+  height: 180rpx;
+  border-radius: 12rpx 12rpx 0 0;
+}
+
+.venue-info {
+  padding: 15rpx;
+}
+
+.venue-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 10rpx;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.venue-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24rpx;
+}
+
+.venue-rating {
+  color: #ff9500;
+}
+
+.venue-distance {
+  color: #999999;
+}
+
+.venue-card.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180rpx;
+  color: #999999;
+  font-size: 28rpx;
+}
+
+/* 活动列表样式 */
+.meeting-list {
+  padding: 0 30rpx 30rpx;
+  background-color: #ffffff;
+}
+
+.meeting-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 30rpx;
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.meeting-info {
+  flex: 1;
+}
+
+.meeting-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.meeting-meta {
+  margin-top: 20rpx;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+  font-size: 26rpx;
+  color: #666666;
+}
+
+.icon {
+  margin-right: 10rpx;
+}
+
+.distance-tag {
+  background-color: #e6f7ff;
+  color: #1890ff;
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.meeting-participants {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20rpx;
+}
+
+.participant-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  border: 2rpx solid #ffffff;
+  margin-bottom: -15rpx;
+}
+
+.participant-count {
+  margin-top: 25rpx;
+  font-size: 24rpx;
+  color: #999999;
+}
+
+/* 空状态样式 */
+.empty-meetings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60rpx 0;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+  margin-bottom: 30rpx;
+}
+
+.btn-create-meeting {
+  background-color: #1890ff;
+  color: #ffffff;
+  font-size: 28rpx;
+  padding: 15rpx 40rpx;
+  border-radius: 30rpx;
+}
+
+/* 加载更多和没有更多数据样式 */
+.load-more, .no-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30rpx 0;
+  font-size: 26rpx;
+  color: #999999;
+}
