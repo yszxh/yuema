@@ -1,0 +1,164 @@
+<!--pages/create/create.wxml-->
+<view class="container">
+  <!-- 步骤指示器 -->
+  <view class="steps">
+    <view class="step-item {{currentStep >= 0 ? 'active' : ''}}" data-step="0">
+      <view class="step-number">1</view>
+      <view class="step-text">基本信息</view>
+    </view>
+    <view class="step-line {{currentStep >= 1 ? 'active' : ''}}"></view>
+    <view class="step-item {{currentStep >= 1 ? 'active' : ''}}" data-step="1">
+      <view class="step-number">2</view>
+      <view class="step-text">邀请好友</view>
+    </view>
+    <view class="step-line {{currentStep >= 2 ? 'active' : ''}}"></view>
+    <view class="step-item {{currentStep >= 2 ? 'active' : ''}}" data-step="2">
+      <view class="step-number">3</view>
+      <view class="step-text">确认</view>
+    </view>
+  </view>
+  
+  <!-- 步骤一：基本信息 -->
+  <view class="step-content" hidden="{{currentStep !== 0}}">
+    <view class="form-group">
+      <text class="form-label">会面标题</text>
+      <input class="form-input" placeholder="请输入会面主题" bindinput="inputTitle" value="{{title}}" />
+    </view>
+    
+    <view class="form-group">
+      <text class="form-label">会面时间</text>
+      <view class="date-time-picker">
+        <picker mode="date" value="{{date}}" start="{{today}}" bindchange="bindDateChange">
+          <view class="picker-item">
+            <text>{{date || '选择日期'}}</text>
+            <icon class="icon" type="calendar" size="40"></icon>
+          </view>
+        </picker>
+        
+        <picker mode="time" value="{{time}}" bindchange="bindTimeChange">
+          <view class="picker-item">
+            <text>{{time || '选择时间'}}</text>
+            <icon class="icon" type="time" size="40"></icon>
+          </view>
+        </picker>
+      </view>
+    </view>
+    
+    <view class="form-group">
+      <text class="form-label">会面描述</text>
+      <textarea class="form-textarea" placeholder="请输入会面描述（可选）" bindinput="inputDescription" value="{{description}}"></textarea>
+    </view>
+  </view>
+  
+  <!-- 步骤二：邀请好友 -->
+  <view class="step-content" hidden="{{currentStep !== 1}}">
+    <view class="friends-title">选择参与人员</view>
+    
+    <view class="current-user">
+      <view class="friend-item selected">
+        <image class="friend-avatar" src="{{userInfo.avatarUrl || '/images/avatars/default_avatar.png'}}"></image>
+        <text class="friend-name">{{userInfo.nickName || '我'}} (创建者)</text>
+        <view class="location-tag">
+          <icon class="icon" type="location" size="24"></icon>
+          <text>已定位</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="divider"></view>
+    
+    <view class="friend-list">
+      <view 
+        class="friend-item {{participants.findIndex(p => p.id === friend.id) > -1 ? 'selected' : ''}}" 
+        wx:for="{{friends}}" 
+        wx:for-item="friend" 
+        wx:key="id"
+        bindtap="toggleFriend"
+        data-id="{{friend.id}}"
+      >
+        <image class="friend-avatar" src="{{friend.avatarUrl}}"></image>
+        <text class="friend-name">{{friend.nickName}}</text>
+        <view class="check-circle {{participants.findIndex(p => p.id === friend.id) > -1 ? 'checked' : ''}}">
+          <icon class="icon" type="check" size="24" wx:if="{{participants.findIndex(p => p.id === friend.id) > -1}}"></icon>
+        </view>
+      </view>
+    </view>
+    
+    <view class="empty-friends" wx:if="{{friends.length === 0}}">
+      <text>暂无好友可邀请</text>
+    </view>
+  </view>
+  
+  <!-- 步骤三：确认 -->
+  <view class="step-content" hidden="{{currentStep !== 2}}">
+    <view class="summary-card">
+      <view class="summary-header">
+        <text class="summary-title">会面信息确认</text>
+      </view>
+      
+      <view class="summary-body">
+        <view class="summary-item">
+          <text class="summary-label">标题:</text>
+          <text class="summary-value">{{title}}</text>
+        </view>
+        
+        <view class="summary-item">
+          <text class="summary-label">时间:</text>
+          <text class="summary-value">{{date}} {{time}}</text>
+        </view>
+        
+        <view class="summary-item">
+          <text class="summary-label">描述:</text>
+          <text class="summary-value">{{description || '无'}}</text>
+        </view>
+        
+        <view class="summary-item">
+          <text class="summary-label">参与人数:</text>
+          <text class="summary-value">{{participants.length + 1}}人</text>
+        </view>
+        
+        <view class="participant-list">
+          <view class="participant-item">
+            <image class="participant-avatar" src="{{userInfo.avatarUrl || '/images/avatars/default_avatar.png'}}"></image>
+            <text class="participant-name">{{userInfo.nickName || '我'}} (创建者)</text>
+          </view>
+          
+          <view 
+            class="participant-item" 
+            wx:for="{{participants}}" 
+            wx:key="id"
+          >
+            <image class="participant-avatar" src="{{item.avatarUrl}}"></image>
+            <text class="participant-name">{{item.nickName}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="summary-tips">
+      <text>创建后，系统将基于所有参与者的位置，智能推荐最佳见面地点</text>
+    </view>
+  </view>
+  
+  <!-- 底部按钮 -->
+  <view class="footer">
+    <button 
+      class="btn btn-secondary" 
+      wx:if="{{currentStep > 0}}" 
+      bindtap="prevStep"
+    >上一步</button>
+    
+    <button 
+      class="btn btn-primary" 
+      wx:if="{{currentStep < 2}}" 
+      bindtap="nextStep"
+    >下一步</button>
+    
+    <button 
+      class="btn btn-primary {{isLoading ? 'loading' : ''}}" 
+      wx:if="{{currentStep === 2}}" 
+      bindtap="createMeeting"
+      disabled="{{isLoading}}"
+    >{{isLoading ? '创建中...' : '创建会面'}}</button>
+  </view>
+</view>
